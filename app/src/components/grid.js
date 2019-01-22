@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Transformer from '../transformers/transformer'
 
 const Container = styled.div`
   display: grid;
@@ -11,57 +12,26 @@ const Item = styled.div`
   background: #eee;
   height: 200px;
 `
+const SVG = styled.svg`
+  width: 100%;
+  height: 100%;
+`
 
-export default (props) => (
-  <Container>
-    <Item>
-      <svg height="200">
-        <rect width="300" height="100" />
-      </svg>
-    </Item>
-    <Item>item 1</Item>
-    <Item>item 1</Item>
-    <Item>item 1</Item>
-    <Item>item 2</Item>
-    <Item>item 3</Item>
-    <Item>item 4</Item>
-    <Item>item 5</Item>
-    <Item>item 6</Item>
-    <Item>item 1</Item>
-    <Item>item 2</Item>
-    <Item>item 3</Item>
-    <Item>item 4</Item>
-    <Item>item 5</Item>
-    <Item>item 6</Item>
-    <Item>item 1</Item>
-    <Item>item 2</Item>
-    <Item>item 3</Item>
-    <Item>item 4</Item>
-    <Item>item 5</Item>
-    <Item>item 6</Item>
-    <Item>item 1</Item>
-    <Item>item 2</Item>
-    <Item>item 3</Item>
-    <Item>item 4</Item>
-    <Item>item 5</Item>
-    <Item>item 6</Item>
-    <Item>item 1</Item>
-    <Item>item 2</Item>
-    <Item>item 3</Item>
-    <Item>item 4</Item>
-    <Item>item 5</Item>
-    <Item>item 6</Item>
-    <Item>item 1</Item>
-    <Item>item 2</Item>
-    <Item>item 3</Item>
-    <Item>item 4</Item>
-    <Item>item 5</Item>
-    <Item>item 6</Item>
-    <Item>item 1</Item>
-    <Item>item 2</Item>
-    <Item>item 3</Item>
-    <Item>item 4</Item>
-    <Item>item 5</Item>
-    <Item>item 6</Item>
-  </Container>
-)
+export default props => {
+  const target = <rect width="80" height="30" />
+  const iterations = Array.from(Array(40))
+  return (
+    <Container>
+      <Item>
+        <SVG>{target}</SVG>
+      </Item>
+      {iterations.map((_, __, i) => (
+        <Item key={i}>
+          <SVG>
+            <Transformer>{target}</Transformer>
+          </SVG>
+        </Item>
+      ))}
+    </Container>
+  )
+}
