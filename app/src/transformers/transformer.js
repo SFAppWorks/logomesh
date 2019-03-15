@@ -1,50 +1,33 @@
 import React from 'react'
 
+const containerSize = [146, 200]
+const objectSize = [80, 30]
+
 const randomSign = () => Math.random() < 0.4
   ? -1
   : 1
 const absoluteRandom = (scale) => randomSign() * Math.random() * scale
 
-const rotate = [
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`,
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`,
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`,
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`,
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`,
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`,
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`,
-  `rotate(${absoluteRandom(40)}, ${absoluteRandom(120)}, ${absoluteRandom(20)})`
-]
+const Transformer = (props) => {
+  return (
+    <>
+      {React.Children.toArray(props.children).map((child) => {
+        const [containerX, containerY] = containerSize
+        const [objectX, objectY] = objectSize
+        const scaleTransformer = absoluteRandom(2)
+        const realX = scaleTransformer * objectX
+        const realY = scaleTransformer * objectY
 
-const scale = [
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`,
-  `scale(${absoluteRandom(2)} ${absoluteRandom(2)})`
-]
-
-class Transformer extends React.Component {
-
-  render() {
-    return (
-      <>
-        {React.Children.toArray(this.props.children).map((child) => {
-          return React.cloneElement(child, {
-            transform: `
-              ${rotate[Math.floor(Math.random() * rotate.length)]}
-              ${scale[Math.floor(Math.random() * scale.length)]}
-            `
-          })
-        })}
-      </>
-    )
-  }
-
+        return React.cloneElement(child, {
+          transform: `
+            translate(${containerX / 2 - realX / 2}, ${containerY / 2 - realY / 2})
+            scale(${scaleTransformer})
+            rotate(${absoluteRandom(360)}, ${objectX / 2}, ${objectY / 2})
+          `
+        })
+      })}
+    </>
+  )
 }
 
 export default Transformer
